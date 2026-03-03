@@ -1,7 +1,6 @@
 # PulseAnalytics: A Strategic BI Framework for Reducing Hospital Readmission & Optimizing Clinical Resource Allocation
 
 
-
 ## 1. Problem Statement
 
 Hospital readmissions particularly within 30 days of discharge remain one of the most critical challenges in modern healthcare systems. High readmission rates contribute to increased operational costs, regulatory penalties, and compromised patient outcomes.
