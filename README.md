@@ -1,10 +1,9 @@
 # PulseAnalytics: A Strategic BI Framework for Reducing Hospital Readmission & Optimizing Clinical Resource Allocation
 
----
 
 ## 1. Problem Statement
 
-Hospital readmissions—particularly within 30 days of discharge—remain one of the most critical challenges in modern healthcare systems. High readmission rates contribute to increased operational costs, regulatory penalties, and compromised patient outcomes.
+Hospital readmissions particularly within 30 days of discharge remain one of the most critical challenges in modern healthcare systems. High readmission rates contribute to increased operational costs, regulatory penalties, and compromised patient outcomes.
 
 Despite the availability of extensive clinical data, healthcare administrators often lack real-time analytical visibility into the operational and clinical drivers of readmission risk. Factors such as medication intensity, laboratory utilization, discharge disposition, payer category, and patient demographics are rarely analyzed within a unified framework.
 
@@ -16,7 +15,7 @@ This project implements an end-to-end Business Intelligence (BI) solution that t
 - Improve ward-level operational efficiency  
 - Support data-driven healthcare decision-making  
 
----
+
 
 ## 2. Strategic Business Questions
 
@@ -35,7 +34,7 @@ How does cost-per-treatment vary across payer categories (insurance vs. self-pay
 ### 5. Discharge Risk Profiling  
 Which discharge dispositions (Home, Skilled Nursing Facility, Rehabilitation Center, etc.) are associated with the highest probability of 30-day readmission?
 
----
+
 
 ## 3. Data Source & Justification
 
@@ -55,7 +54,7 @@ Which discharge dispositions (Home, Skilled Nursing Facility, Rehabilitation Cen
 
 This dataset exceeds the minimum 8,000-row requirement and provides sufficient structural complexity for enterprise-grade BI implementation.
 
----
+
 
 ### B. Data Modeling Strategy (Star Schema)
 
@@ -88,7 +87,6 @@ The model will implement:
 
 
 
----
 Contributors:
 
 - Van Tasi
