@@ -56,7 +56,7 @@ This dataset exceeds the minimum 8,000-row requirement and provides sufficient s
 
 
 
-### B. Data Modeling Strategy (Star Schema)
+### B. Data Modeling Strategy (Star-Schema)
 
 The flat dataset will be restructured into a Star Schema consisting of:
 
