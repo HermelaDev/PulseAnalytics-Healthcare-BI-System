@@ -58,28 +58,40 @@ This dataset exceeds the minimum 8,000-row requirement and provides sufficient s
 
 ### B. Data Modeling Strategy (Star-Schema)
 
-The flat dataset will be restructured into a Star Schema consisting of:
+Based on the dataset structure and the nature of the hospital encounters, our star schema consists of one central fact table (FACT_ENCOUNTER) containing all numeric mesaures and foreign keys, surrounded by four dimensions: Dim_Patient [patient demographics], Dim_Admission [admission characteristics], Dim_Diagnosis [ICD-9 codes], and Dim_Medication [drug dosage changes]. This modelling approach ensures optimal performance, accurate DAX calcualtions, and clean filter propagation. 
+
+The Star Schema consists of:
 
 #### Fact Table
-**Fact_Admissions**
-- Admission ID
-- Patient Key
-- Specialty Key
-- Date Key
-- Lab Procedure Count
-- Medication Count
-- Length of Stay
-- Readmission Indicator
-- Derived Cost Measure
+**Fact_Encounter**
+- encounter_id
+- patient_nbr
+- admission_type_id
+- admission_source_id
+- discharge_disposition_id
+- diag_1
+- diag_2
+- diag_3
+- time_in_hospital
+- num_lab_procedures
+- num_procedures
+- num_medications
+- number_outpatient
+- number_emergency
+- number_inpatient
+- number_diagnosis
+- readmitted
+- Admission_Key
+- Diagnosis_Key
 
 #### Dimension Tables
-- **Dim_Patients** (Age, Gender, Race)
-- **Dim_Specialties**
-- **Dim_Payer**
-- **Dim_Discharge**
+- **Dim_Patient** (patient_nbr, race, gender, Age_Midpoint, payer_code)
+- **Dim_Admission** (admission_type_id, admission_source_id, discharge_disposition_id, Admission_ID, Admission_Key)
+- **Dim_Diagnosis** (diag_1, diag_2, diag_3, Diagnosis_ID, Diagnosis_Key)
+- **Dim_Medication** (Drug_Name, Dosage_Change_Type, Medication_ID, Medication_Key)
 - **Dim_Date** (Dedicated Date table built using DAX)
 
-The model will implement:
+The model implements:
 - One-to-many relationships
 - Proper cardinality
 - Single-direction filtering
