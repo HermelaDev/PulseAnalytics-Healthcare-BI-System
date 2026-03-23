@@ -83,6 +83,7 @@ The Star Schema consists of:
 - readmitted
 - Admission_Key
 - Diagnosis_Key
+- Synthetic_Date
 
 #### Dimension Tables
 - **Dim_Patient** (patient_nbr, race, gender, Age_Midpoint, payer_code)
