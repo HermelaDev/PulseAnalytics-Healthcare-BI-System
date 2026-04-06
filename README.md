@@ -15,7 +15,14 @@ This project implements an end-to-end Business Intelligence (BI) solution that t
 - Improve ward-level operational efficiency  
 - Support data-driven healthcare decision-making  
 
+### Project Directory
 
+To ensure a professional and organized repository, the project is structured as follows:
+* **dashboard_images/**: Screenshots of all Power BI dashboard pages.
+* **Data/**: Contains `diabetic_data.csv` (Source dataset).
+* **Documentation/**: Technical guides including `Documented_transformations.pdf` and `Documented_modelling.pdf`.
+* **Reports/**: Final business deliverables, including the `Hospital_Performance_Report.pdf`.
+* **PulseAnalytics-BI-Project.pbix**: The core Power BI file containing the data model and visualizations.
 
 ## 2. Strategic Business Questions
 
@@ -44,6 +51,12 @@ Which clinical categories contribute most significantly to diagnostic revenue, a
 
 ### Dataset
 **Diabetes 130-US Hospitals Dataset (1999–2008)**
+
+```
+
+https://archive.ics.uci.edu/dataset/296/diabetes+130-us+hospitals+for+years+1999-2008
+
+```
 
 ### Dataset Characteristics
 - 101,766 patient admission records  
@@ -117,11 +130,12 @@ A granular tool for clinical managers. By selecting a specific encounter, users 
 
 
 ## 5. Key Insights
+* **Ethnicity Risk Disparity:** A **12% performance gap** exists between African American patients (35% risk) and the benchmark group (23%).
+* **Seasonal Volatility:** Data reveals consistent spikes in **August and October**, suggesting periods of peak system pressure.
+* **The "Polypharmacy" Indicator:** Patients prescribed **14+ medications** or undergoing **13+ lab procedures** are significantly more likely to be readmitted.
+* **Patient-Level Complexity:** Individual drill-downs reveal that high-risk patients often have lab counts exceeding **150–300 per stay** and frequent medication titration.
 
-* **Ethnicity Risk Disparity:** There is a significant **12% performance gap** between the highest-risk group (African American at 35%) and the benchmark group (Asian/Other at 23%).
-* **Seasonal Volatility:** Hospital readmissions are not static; data reveals consistent spikes in **August and October**, suggesting periods of peak system pressure.
-* **The "Polypharmacy" Indicator:** Clinical intensity is a lead indicator of risk; patients prescribed **14+ medications** or undergoing **13+ lab procedures** are significantly more likely to be readmitted.
-* **Primary Clinical Drivers:** Diagnosis codes **428 (Heart Failure)** and **414 (Ischemic Heart Disease)** remain the top two drivers of both patient volume and diagnostic revenue (approx. $579K combined).
+> **View More Comprehensive Insights:** [Click here to read the full Business Performance Report (PDF)](./Reports/Hospital_Performance_Report.pdf)
 
 
 
@@ -131,6 +145,7 @@ A granular tool for clinical managers. By selecting a specific encounter, users 
 * **Standardize Discharge Care:** Analyze the protocols used for the 23% risk groups to create a standardized "Gold Standard" discharge checklist for higher-risk segments.
 * **Seasonal Staffing Adjustments:** Reallocate nursing and administrative resources to cover the identified surges in August and October to maintain care quality.
 * **Specialized Pathways:** Establish a dedicated clinical pathway for **Heart Failure (Code 428)** to reduce the 4.38-day average stay while protecting the revenue baseline.
+
 
 
 
