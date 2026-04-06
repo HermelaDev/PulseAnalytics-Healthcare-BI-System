@@ -15,6 +15,8 @@ This project implements an end-to-end Business Intelligence (BI) solution that t
 - Improve ward-level operational efficiency  
 - Support data-driven healthcare decision-making  
 
+---
+
 ### Project Directory
 
 To ensure a professional and organized repository, the project is structured as follows:
@@ -23,6 +25,8 @@ To ensure a professional and organized repository, the project is structured as 
 * **Documentation/**: Technical guides including `Documented_transformations.pdf` and `Documented_modelling.pdf`.
 * **Reports/**: Final business deliverables, including the `Hospital_Performance_Report.pdf`.
 * **PulseAnalytics-BI-Project.pbix**: The core Power BI file containing the data model and visualizations.
+
+---
 
 ## 2. Strategic Business Questions
 
@@ -41,7 +45,7 @@ Which primary diagnoses (ICD-9 codes) consistently drive hospital volume and len
 ### 5. Financial Impact & Revenue Drivers
 Which clinical categories contribute most significantly to diagnostic revenue, and how does the cost of care (pharmacy and lab utilization) scale within our largest patient demographic, the senior population?
 
-
+---
 
 ## 3. Data Source & Justification
 
@@ -67,7 +71,7 @@ https://archive.ics.uci.edu/dataset/296/diabetes+130-us+hospitals+for+years+1999
 
 This dataset exceeds the minimum 8,000-row requirement and provides sufficient structural complexity for enterprise-grade BI implementation.
 
-
+---
 
 ### B. Data Modeling Strategy (Star Schema)
 
@@ -98,6 +102,8 @@ The model will implement:
 - Single-direction filtering
 - Clean and professional model view
 
+ --- 
+
 ### 4. Dashboard Pages Overview
 
 Our Power BI solution is structured into four strategic layers to provide both executive summaries and granular operational data:
@@ -127,7 +133,7 @@ A granular tool for clinical managers. By selecting a specific encounter, users 
 
 ![Patient Drill Down](dashboard_images/patient_drillthrough.png)
 
-
+---
 
 ## 5. Key Insights
 * **Ethnicity Risk Disparity:** A **12% performance gap** exists between African American patients (35% risk) and the benchmark group (23%).
@@ -137,7 +143,7 @@ A granular tool for clinical managers. By selecting a specific encounter, users 
 
 > **View More Comprehensive Insights:** [Click here to read the full Business Performance Report (PDF)](./Reports/Hospital_Performance_Report.pdf)
 
-
+---
 
 ## 6. Strategic Recommendations
 
@@ -146,7 +152,7 @@ A granular tool for clinical managers. By selecting a specific encounter, users 
 * **Seasonal Staffing Adjustments:** Reallocate nursing and administrative resources to cover the identified surges in August and October to maintain care quality.
 * **Specialized Pathways:** Establish a dedicated clinical pathway for **Heart Failure (Code 428)** to reduce the 4.38-day average stay while protecting the revenue baseline.
 
-
+---
 
 ## **Contributors**
 
