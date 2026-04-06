@@ -19,20 +19,20 @@ This project implements an end-to-end Business Intelligence (BI) solution that t
 
 ## 2. Strategic Business Questions
 
-### 1. Readmission Risk Analysis  
-What is the 30-day readmission rate across different age groups and ethnicities, and where do the most significant disparities occur?
+### 1. Readmission Risk & Equity Gap
+What is the baseline 30-day readmission rate, and how do rates vary across different ethnicities and age groups? Specifically, what is the "gap" between our highest-risk and best-performing segments?
 
-### 2. Clinical Intensity Impact  
-Is there a measurable relationship between the number of laboratory procedures and medications administered during initial admission and the likelihood of readmission?
+### 2. Seasonal Volume & Timing
+Are hospital return rates consistent throughout the year, or are there specific months where clinical pressure spikes, necessitating resource reallocation?
 
-### 3. Operational Performance Evaluation  
-Which medical specialties (e.g., Cardiology vs. Internal Medicine) exhibit the highest Average Length of Stay (ALOS), and how does this influence bed occupancy?
+### 3. Clinical Intensity & Resource Load
+Is there a correlation between high-intensity clinical interventions (number of medications prescribed and laboratory procedures performed) and the likelihood of a patient returning within 30 days?
 
-### 4. Financial Performance Insight  
-How does cost-per-treatment vary across payer categories (insurance vs. self-pay), and what trends are observable over time?
+### 4. Operational Consistency & Diagnosis Drivers
+Which primary diagnoses (ICD-9 codes) consistently drive hospital volume and length of stay (ALOS)? Does this pattern remain stable across multiple years of data?
 
-### 5. Discharge Risk Profiling  
-Which discharge dispositions (Home, Skilled Nursing Facility, Rehabilitation Center, etc.) are associated with the highest probability of 30-day readmission?
+### 5. Financial Impact & Revenue Drivers
+Which clinical categories contribute most significantly to diagnostic revenue, and how does the cost of care (pharmacy and lab utilization) scale within our largest patient demographic, the senior population?
 
 
 
@@ -91,25 +91,30 @@ Our Power BI solution is structured into four strategic layers to provide both e
 
 #### **I. Executive Health Overview**
 A high-level "Command Center" for hospital leadership. This page tracks the baseline 33% readmission risk, total patient encounters, and unique patient counts across the 10-year dataset.
+
 ![Executive Dashboard](dashboard_images/executive_summary.png)
 
 #### **II. Demographic & Risk Analysis**
 A deep-dive into patient segments to identify health disparities. This page allows administrators to filter by ethnicity, age, and gender to pinpoint where the 30-day return rate deviates from the system average.
+
 ![Risk & Gap Analysis](dashboard_images/readmission_analysis.png)
 
 #### **III. Clinical & Operational Efficiency**
 This page analyzes resource utilization, mapping the Average Length of Stay (ALOS) against primary diagnoses and tracking the volume of lab procedures and medications per encounter.
+
 ![Operational Dashboard](dashboard_images/operations.png)
 
 #### **IV. Financial Performance & Resource Cost**
 A specialized view of hospital economics. This dashboard correlates clinical activity with revenue, highlighting that senior patients drive the highest lab revenue and pharmacy expenditure.
+
 ![Financial Dashboard](dashboard_images/financials.png)
 
 #### **V. Patient Journey (Drill-Through)**
 A granular tool for clinical managers. By selecting a specific encounter, users can "drill through" to a detailed patient profile to view medication changes, specific lab results, and diagnostic history.
+
 ![Patient Drill Down](dashboard_images/patient_drillthrough.png)
 
----
+
 
 ## 5. Key Insights
 
@@ -118,7 +123,7 @@ A granular tool for clinical managers. By selecting a specific encounter, users 
 * **The "Polypharmacy" Indicator:** Clinical intensity is a lead indicator of risk; patients prescribed **14+ medications** or undergoing **13+ lab procedures** are significantly more likely to be readmitted.
 * **Primary Clinical Drivers:** Diagnosis codes **428 (Heart Failure)** and **414 (Ischemic Heart Disease)** remain the top two drivers of both patient volume and diagnostic revenue (approx. $579K combined).
 
----
+
 
 ## 6. Strategic Recommendations
 
@@ -127,7 +132,7 @@ A granular tool for clinical managers. By selecting a specific encounter, users 
 * **Seasonal Staffing Adjustments:** Reallocate nursing and administrative resources to cover the identified surges in August and October to maintain care quality.
 * **Specialized Pathways:** Establish a dedicated clinical pathway for **Heart Failure (Code 428)** to reduce the 4.38-day average stay while protecting the revenue baseline.
 
----
+
 
 Contributors:
 
