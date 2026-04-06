@@ -56,49 +56,78 @@ This dataset exceeds the minimum 8,000-row requirement and provides sufficient s
 
 
 
-### B. Data Modeling Strategy (Star-Schema)
+### B. Data Modeling Strategy (Star Schema)
 
-Based on the dataset structure and the nature of the hospital encounters, our star schema consists of one central fact table (FACT_ENCOUNTER) containing all numeric mesaures and foreign keys, surrounded by four dimensions: Dim_Patient [patient demographics], Dim_Admission [admission characteristics], Dim_Diagnosis [ICD-9 codes], and Dim_Medication [drug dosage changes]. This modelling approach ensures optimal performance, accurate DAX calcualtions, and clean filter propagation. 
-
-The Star Schema consists of:
+The flat dataset will be restructured into a Star Schema consisting of:
 
 #### Fact Table
-**Fact_Encounter**
-- encounter_id
-- patient_nbr
-- admission_type_id
-- admission_source_id
-- discharge_disposition_id
-- diag_1
-- diag_2
-- diag_3
-- time_in_hospital
-- num_lab_procedures
-- num_procedures
-- num_medications
-- number_outpatient
-- number_emergency
-- number_inpatient
-- number_diagnosis
-- readmitted
-- Admission_Key
-- Diagnosis_Key
-- Synthetic_Date
+**Fact_Admissions**
+- Admission ID
+- Patient Key
+- Specialty Key
+- Date Key
+- Lab Procedure Count
+- Medication Count
+- Length of Stay
+- Readmission Indicator
+- Derived Cost Measure
 
 #### Dimension Tables
-- **Dim_Patient** (patient_nbr, race, gender, Age_Midpoint, payer_code)
-- **Dim_Admission** (admission_type_id, admission_source_id, discharge_disposition_id, Admission_ID, Admission_Key)
-- **Dim_Diagnosis** (diag_1, diag_2, diag_3, Diagnosis_ID, Diagnosis_Key)
-- **Dim_Medication** (Drug_Name, Dosage_Change_Type, Medication_ID, Medication_Key)
+- **Dim_Patients** (Age, Gender, Race)
+- **Dim_Specialties**
+- **Dim_Payer**
+- **Dim_Discharge**
 - **Dim_Date** (Dedicated Date table built using DAX)
 
-The model implements:
+The model will implement:
 - One-to-many relationships
 - Proper cardinality
 - Single-direction filtering
 - Clean and professional model view
 
+### 4. Dashboard Pages Overview
 
+Our Power BI solution is structured into four strategic layers to provide both executive summaries and granular operational data:
+
+#### **I. Executive Health Overview**
+A high-level "Command Center" for hospital leadership. This page tracks the baseline 33% readmission risk, total patient encounters, and unique patient counts across the 10-year dataset.
+![Executive Dashboard](dashboard_images/executive_summary.png)
+
+#### **II. Demographic & Risk Analysis**
+A deep-dive into patient segments to identify health disparities. This page allows administrators to filter by ethnicity, age, and gender to pinpoint where the 30-day return rate deviates from the system average.
+![Risk & Gap Analysis](dashboard_images/readmission_analysis.png)
+
+#### **III. Clinical & Operational Efficiency**
+This page analyzes resource utilization, mapping the Average Length of Stay (ALOS) against primary diagnoses and tracking the volume of lab procedures and medications per encounter.
+![Operational Dashboard](dashboard_images/operations.png)
+
+#### **IV. Financial Performance & Resource Cost**
+A specialized view of hospital economics. This dashboard correlates clinical activity with revenue, highlighting that senior patients drive the highest lab revenue and pharmacy expenditure.
+![Financial Dashboard](dashboard_images/financials.png)
+
+#### **V. Patient Journey (Drill-Through)**
+A granular tool for clinical managers. By selecting a specific encounter, users can "drill through" to a detailed patient profile to view medication changes, specific lab results, and diagnostic history.
+![Patient Drill Down](dashboard_images/patient_drillthrough.png)
+
+---
+
+## 5. Key Insights
+
+* **Ethnicity Risk Disparity:** There is a significant **12% performance gap** between the highest-risk group (African American at 35%) and the benchmark group (Asian/Other at 23%).
+* **Seasonal Volatility:** Hospital readmissions are not static; data reveals consistent spikes in **August and October**, suggesting periods of peak system pressure.
+* **The "Polypharmacy" Indicator:** Clinical intensity is a lead indicator of risk; patients prescribed **14+ medications** or undergoing **13+ lab procedures** are significantly more likely to be readmitted.
+* **Primary Clinical Drivers:** Diagnosis codes **428 (Heart Failure)** and **414 (Ischemic Heart Disease)** remain the top two drivers of both patient volume and diagnostic revenue (approx. $579K combined).
+
+---
+
+## 6. Strategic Recommendations
+
+* **Implement a "High-Risk Daily List":** Use the **Patient Drill-Through** tool to generate a daily report of patients with >10 medications for a mandatory pharmacist consult prior to discharge.
+* **Standardize Discharge Care:** Analyze the protocols used for the 23% risk groups to create a standardized "Gold Standard" discharge checklist for higher-risk segments.
+* **Seasonal Staffing Adjustments:** Reallocate nursing and administrative resources to cover the identified surges in August and October to maintain care quality.
+* **Specialized Pathways:** Establish a dedicated clinical pathway for **Heart Failure (Code 428)** to reduce the 4.38-day average stay while protecting the revenue baseline.
+
+---
 
 Contributors:
 
@@ -111,3 +140,5 @@ Contributors:
 - Hermela Seltanu
 
 - Hetal Kumbharana
+
+
