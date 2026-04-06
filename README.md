@@ -148,17 +148,14 @@ A granular tool for clinical managers. By selecting a specific encounter, users 
 
 
 
+## **Contributors**
 
-Contributors:
+* **Van Tasi:** Lead DAX Developer & Statistical Analysis
+* **Selmah Mise:** Senior Dashboard Designer & UI/UX Optimization
+* **Peter Kidiga:** Data Engineering (Cleaning & ETL Transformation)
+* **Hermela Seltanu:** Data Engineering (Cleaning & ETL Transformation)
+* **Hetal Kumbharana:** Data Architect (Star-Schema Modelling) & Dashboard Support
 
-- Van Tasi
 
-- Selmah Mise
-
-- Peter Kidiga
-
-- Hermela Seltanu
-
-- Hetal Kumbharana
 
 
