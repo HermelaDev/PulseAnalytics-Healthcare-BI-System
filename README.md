@@ -86,7 +86,7 @@ The raw dataset was processed using **Power Query (M)** to ensure clinical accur
     * `>30` → **"Over 30 Days"**
     * `NO` → **"Not Readmitted"**
 
-> **Technical Deep-Dive:** [Click here to view the full Documented Transformations & M-Code (PDF)](./Documentation/Documented_transformations.pdf)
+> **Technical Deep-Dive:** [View Documented Transformations & M-Code (PDF)](./Documentation/Documented_transformations.pdf) | [Download (PDF)](./Documentation/Documented_transformations.pdf?raw=true)
 
 ---
 
