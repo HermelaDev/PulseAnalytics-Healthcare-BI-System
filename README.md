@@ -277,7 +277,7 @@ Tool for viewing individual medication changes and lab results.
 ---
 
 ## 10. Project Resources
-* **Interactive Dashboard:** [Click Here to View Power BI Public Link](#)
+* **Power BI Service Public Link (Interactive Dashboard):** [Click Here to View Power BI Public Link](https://app.powerbi.com/view?r=eyJrIjoiOTRmYTY2YzktN2NmYy00MjA3LWJjOTctM2FhNWZkYTFiOGVlIiwidCI6IjE2ZDgzZWU2LTI1NGEtNDY5ZC1hNmNjLTU0ZTJjYTIzMTNlNyIsImMiOjh9)
 * **Final Presentation Slides:** [Available in Reports Folder](./Reports/Presentation_Slides.pdf) | [Download](./Reports/Presentation_Slides.pdf?raw=true)
 
 ---
