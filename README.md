@@ -63,14 +63,62 @@ To ensure a professional and organized repository, the project is structured as 
 ## 5. Technical Workflow
 
 ### Data Cleaning & Transformation
-*Detailed documentation regarding data cleaning steps can be found in:* `Documentation/Documented_transformations.pdf`
-* **Handled Missing Values:** Addressed nulls in 'Weight', 'Payer Code', and 'Medical Specialty'.
-* **Data Standardization:** Re-grouped Age brackets and mapped ICD-9 codes to clinical categories.
+The raw dataset was processed using **Power Query (M)** to ensure clinical accuracy and model efficiency. Our transformation strategy focused on standardizing categorical labels and converting text-based clinical ranges into usable numeric measures.
 
-### Data Modeling (Star Schema)
-*Detailed documentation regarding the model architecture can be found in:* `Documentation/Documented_modelling.pdf`
-* **Fact Table:** `Fact_Admissions` (Numeric measures and keys).
-* **Dimension Tables:** `Dim_Patients`, `Dim_Specialties`, `Dim_Payer`, `Dim_Discharge`, and `Dim_Date`.
+#### **I. Core Identifiers & Demographics**
+* **IDs (Columns 1 & 2):** Converted `encounter_id` and `patient_nbr` from Numbers to **Text**. This prevents accidental aggregation (summing IDs) and keeps the data model lean.
+* **Race (Column 3):** Replaced `?` placeholders with **"Other"**. Applied *Trim* and *Capitalize Each Word* to ensure consistent grouping for demographic gap analysis.
+* **Gender (Column 4):** Standardized casing and removed "Unknown/Invalid" records to maintain a high-quality, verified clinical dataset.
+* **Age (Column 5):** Stripped mathematical symbols `[ )`, split ranges, and calculated an **Age_Midpoint**. This transformed unusable text brackets into numeric values for advanced DAX correlations.
+* **Weight (Column 6):** Dropped entirely. Research confirmed 97% missing data; removing this "noise" optimized file size and model performance.
+
+#### **II. Clinical & Operational Logic**
+* **Mortality Filtering (Column 8):** Implemented a strict row filter to exclude `discharge_disposition_id` codes associated with expired patients (11, 13, 14, 19, 20, 21). This ensures risk calculations only apply to the "at-risk" living population.
+* **Hospital Metrics (Columns 10-18):** Validated `time_in_hospital` and health utilization counts as **Whole Numbers**. This enables the calculation of **Average Length of Stay (ALOS)** and resource intensity metrics.
+* **Specialty & Payer (Columns 11-12):** Replaced `?` with **"Not Specified"**. We chose to retain these to analyze known segments (e.g., Medicare vs. Private) rather than losing 50% of the departmental volume data.
+
+#### **III. Diagnostics & Medication Tracking**
+* **ICD-9 Codes (Columns 19-21):** Strictly cast `diag_1`, `diag_2`, and `diag_3` as **Text**. This prevents Power BI from dropping leading/trailing zeros or corrupting alphanumeric codes (V-codes/E-codes).
+* **Lab Results (Columns 23-24):** Replaced "None" with **"Not Tested"**. This semantic correction distinguishes between a "missing" value and a deliberate clinical decision to omit a test.
+* **Pharmacy Load (Columns 25-47):** Bulk-validated 20+ medication dosage columns as **Text**. This categorical tracking allows us to analyze how "Polypharmacy" (high drug counts) or dosage changes impact returns.
+* **Readmission Labels (Target Variable):** Transformed raw system outputs into executive-ready labels:
+    * `<30` → **"Under 30 Days"**
+    * `>30` → **"Over 30 Days"**
+    * `NO` → **"Not Readmitted"**
+
+> **Technical Deep-Dive:** [Click here to view the full Documented Transformations & M-Code (PDF)](./Documentation/Documented_transformations.pdf)
+
+---
+
+### Data Modeling Strategy (Star Schema)
+
+To enable performant DAX calculations and intuitive filtering, the flat dataset was restructured into a **Star Schema**. All dimension tables were created using the **"Reference"** method in Power Query to maintain a single source of truth and ensure a dynamic data lineage.
+
+#### **I. The Fact Table: `Fact_Encounter`**
+This is the core of our model, containing quantitative measures and foreign keys. 
+* **Attributes:** Includes `time_in_hospital`, `num_lab_procedures`, `num_medications`, and the `readmitted` target variable.
+* **Synthetic Date Logic:** Generated a stable, unique `Synthetic_Date` for every encounter using an index-based formula. This ensures each record has a fixed point in time (1999–2008) for time-intelligence analysis without row-shuffling during refreshes.
+
+#### **II. Dimension Tables**
+* **`Dim_Patient`:** Stores unique patient demographics. We removed duplicate `patient_nbr` rows to ensure a strict **1:N (One-to-Many)** relationship, allowing us to track the longitudinal journey of a single patient across multiple hospital visits.
+* **`Dim_Admission`:** Categorizes hospital entry and exit logic. We utilized **Composite Keys** (`Admission_Key`) to link complex combinations of admission type, source, and discharge disposition to the fact table.
+* **`Dim_Diagnosis`:** Houses categorical ICD-9 labels. By isolating these into a dimension, we can analyze how specific "Diagnosis Profiles" (Primary, Secondary, and Tertiary) impact the 33% system risk.
+* **`Dim_Date`:** A dedicated calendar table built using DAX. It supports standard time intelligence (Year, Quarter, Month Name) and is marked as the official **Date Table** for the model.
+
+#### **III. The Medication Bridge (Handling Multi-Value Attributes)**
+The original dataset contained 24 individual medication columns per row. To analyze these effectively:
+1.  **Unpivoting:** We unpivoted the medication columns into `Drug_Name` and `Dosage_Change_Type`.
+2.  **Bridge Table (`Bridge_Medication`):** Because the grain of medications (multiple per encounter) differs from the grain of admissions (one per encounter), we implemented a **Bridge Table**.
+3.  **Cross-Filtering:** Set the cross-filter direction to **"Both"** between the Fact table and the Bridge. This ensures that when a user selects a specific drug in a slicer (e.g., Metformin), the Fact table correctly filters to only those specific patient encounters.
+
+#### **IV. Relationship Logic & Model View**
+The final architecture follows a strict Star Schema pattern:
+* **Cardinality:** All relationships are defined as **One-to-Many (1:N)**, flowing from dimensions to the Fact table.
+* **Integrity:** Unique Index Keys and Composite Keys prevent broken relationships and ensure data referential integrity.
+
+> **Architecture Deep-Dive:** [Click here to view the full Data Modeling & Relationship Guide (PDF)](./Documentation/Documented_modelling.pdf)
+
+---
 
 ### DAX Calculations & Measures
 *Key measures developed for this analysis include:*
