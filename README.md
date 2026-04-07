@@ -111,10 +111,13 @@ The core table containing quantitative measures and keys.
 * **Synthetic Date Logic:** Generated a stable, unique `Synthetic_Date` for every encounter using an index-based formula, ensuring each record has a fixed point in time (1999–2008) for time-intelligence.
 
 #### **II. Dimension Tables**
-* **`Dim_Patient`:** Stores unique patient demographics. Removed duplicates to ensure a strict **1:N** relationship.
-* **`Dim_Admission`:** Categorizes hospital entry/exit using **Composite Keys** (`Admission_Key`) to link complex disposition combinations.
-* **`Dim_Diagnosis`:** Houses categorical ICD-9 labels to analyze how diagnosis profiles impact system risk.
-* **`Dim_Date`:** A dedicated calendar table marking the official **Date Table** for the model.
+#### **II. Dimension Tables**
+
+* **`Dim_Patient`:** Stores unique patient demographics. Removed duplicates during ETL to ensure a strict **1:N** relationship with the Fact table.
+* **`Dim_Admission`:** Categorizes hospital entry and exit points using **Composite Keys** (`Admission_Key`) to accurately link complex disposition combinations.
+* **`Dim_Diagnosis`:** Houses categorical ICD-9 labels, allowing for deep-dive analysis into how specific diagnosis profiles impact overall system risk.
+* **`Dim_Medication`:** A comprehensive registry of clinical prescriptions. This dimension serves as the primary target for the **Medication Bridge Table**, enabling the model to resolve many-to-many relationships without record inflation.
+* **`Dim_Date`:** A dedicated calendar table engineered with synthetic logic (1999–2008). Marked as the official **Date Table** to support time-intelligence and YoY clinical benchmarking.
 
 #### **III. The Medication Bridge**
 1.  **Unpivoting:** Flattened 24 medication columns into `Drug_Name` and `Dosage_Change_Type`.
