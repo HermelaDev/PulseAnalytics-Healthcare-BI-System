@@ -120,11 +120,119 @@ The final architecture follows a strict Star Schema pattern:
 
 ---
 
-### DAX Calculations & Measures
-*Key measures developed for this analysis include:*
-* **Readmission Rate %:** Calculation of 30-day return frequency.
-* **Risk Gap:** Percentage difference between demographic risk segments.
-* **Resource Intensity Index:** Correlating lab procedures and medication titration.
+###  DAX Calculations & Measures
+
+The analytical engine of PulseAnalytics is powered by a tiered library of DAX measures. These range from foundational aggregations to complex business logic used for risk scoring and resource allocation.
+
+#### **I. Core KPIs (Foundation Metrics)**
+These measures establish the baseline volume and clinical intensity for the hospital system.
+
+* **Total Encounters** Counts the unique admission records in the dataset.
+    ```dax
+    Total Encounters = DISTINCTCOUNT(Fact_Encounter[encounter_id])
+    ```
+
+* **Total Patients** Tracks the number of unique individuals treated across the 10-year period.
+    ```dax
+    Total Patients = DISTINCTCOUNT(Fact_Encounter[patient_nbr])
+    ```
+
+* **Average Medications per Encounter** Benchmarks the pharmacological load per hospital stay.
+    ```dax
+    Avg Medications per Encounter = AVERAGE(Fact_Encounter[num_medications])
+    ```
+
+* **Average Lab Procedures** Measures the diagnostic intensity of each encounter.
+    ```dax
+    Avg Lab Procedures = AVERAGE(Fact_Encounter[num_lab_procedures])
+    ```
+
+#### **II. Operational Intelligence**
+Measures designed to monitor hospital efficiency, patient flow, and resource pressure.
+
+* **Average Stay Duration (ALOS)** Calculates the average length of stay in days.
+    ```dax
+    Average Stay Duration = AVERAGE(Fact_Encounter[time_in_hospital])
+    ```
+
+* **Lab Utilization Index** Normalizes lab procedure volume against total encounters to identify high-intensity departments.
+    ```dax
+    Lab Utilization Index = DIVIDE(SUM(Fact_Encounter[num_lab_procedures]), [Total Encounters])
+    ```
+
+* **Medication Intensity Index** Correlates the number of medications prescribed against the number of diagnoses.
+    ```dax
+    Medication Intensity Index = DIVIDE(SUM(Fact_Encounter[num_medications]), SUM(Fact_Encounter[number_diagnoses]))
+    ```
+
+* **Resource Pressure Status** A dynamic status indicator that flags system strain based on lab and medication thresholds.
+    ```dax
+    Resource Pressure Status = 
+    VAR labs = [Lab Utilization Index]
+    VAR meds = [Medication Intensity Index]
+    RETURN
+    SWITCH(
+        TRUE(),
+        labs > 40 && meds > 5, "Critical",
+        labs > 20, "Elevated",
+        "Stable"
+    )
+    ```
+
+#### **III. Advanced Analytics & Risk Scoring**
+Strategic logic used to identify high-risk profiles and perform comparative analysis.
+
+* **Readmission Risk Score** Identifies the probability of return based on previous inpatient history.
+    ```dax
+    Readmission Risk Score = 
+    VAR HighRisk = CALCULATE(COUNT(fact_Encounter[encounter_id]), fact_Encounter[number_inpatient] > 0)
+    VAR Total = CALCULATE(COUNT(fact_Encounter[encounter_id]), ALLSELECTED(fact_Encounter))
+    RETURN
+    DIVIDE(HighRisk, Total, 0)
+    ```
+
+* **High Utilisation Flag** Segments patients into 'High' or 'Normal' categories based on clinical resource consumption.
+    ```dax
+    High Utilisation Flag = 
+    VAR avgMeds = [Avg Medications per Encounter]
+    VAR avgLabs = [Avg Lab Procedures]
+    RETURN
+    IF(avgMeds > 10 || avgLabs > 40, "High", "Normal")
+    ```
+
+* **Diagnosis Rank** Ranks primary ICD-9 codes by encounter volume to identify the biggest clinical drivers.
+    ```dax
+    Diagnosis Rank = RANKX(ALL(Dim_Diagnosis[diag_1]), [Total Encounters], , DESC)
+    ```
+
+* **Encounter Share %** Calculates the percentage of total encounters attributed to a specific segment (e.g., gender).
+    ```dax
+    Encounter Share % = DIVIDE([Total Encounters], CALCULATE([Total Encounters], ALL(Dim_Patient[gender])))
+    ```
+
+#### **IV. Time Intelligence**
+Measures used to track seasonal trends and growth rates across different periods.
+
+* **Encounters YTD** Calculates Year-to-Date volume accumulation.
+    ```dax
+    Encounters YTD = TOTALYTD([Total Encounters], Dim_Date[Date])
+    ```
+
+* **Year-over-Year (YoY) Growth %** Measures the percentage change in volume compared to the same period in the previous year.
+    ```dax
+    YoY Growth % = 
+    VAR LY = CALCULATE([Total Encounters], SAMEPERIODLASTYEAR(Dim_Date[Date]))
+    RETURN
+    DIVIDE([Total Encounters] - LY, LY)
+    ```
+
+* **Quarter-over-Quarter (QoQ) Growth %** Tracks short-term volume fluctuations.
+    ```dax
+    QoQ Growth % = 
+    VAR LQ = CALCULATE([Total Encounters], PREVIOUSQUARTER(Dim_Date[Date]))
+    RETURN
+    DIVIDE([Total Encounters] - LQ, LQ)
+    ```
 
 ---
 
