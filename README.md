@@ -116,7 +116,7 @@ The final architecture follows a strict Star Schema pattern:
 * **Cardinality:** All relationships are defined as **One-to-Many (1:N)**, flowing from dimensions to the Fact table.
 * **Integrity:** Unique Index Keys and Composite Keys prevent broken relationships and ensure data referential integrity.
 
-> **Architecture Deep-Dive:** [Click here to view the full Data Modeling & Relationship Guide (PDF)](./Documentation/Documented_modelling.pdf)
+> **Architecture Deep-Dive:** [View Data Modeling & Relationship Guide (PDF)](./Documentation/Documented_modelling.pdf) | [Download (PDF)](./Documentation/Documented_modelling.pdf?raw=true)
 
 ---
 
@@ -158,8 +158,7 @@ Granular tool for clinical managers to view individual medication changes and la
 * **The "Polypharmacy" Indicator:** Patients prescribed **14+ medications** are significantly more likely to be readmitted.
 * **Patient Complexity:** High-risk profiles often show lab counts exceeding **150–300 per stay**.
 
-> **View Comprehensive Analysis:** [Click here to read the full Business Performance Report (PDF)](./Reports/Hospital_Performance_Report.pdf)
-
+> **View Comprehensive Analysis:** [View Business Performance Report (PDF)](./Reports/Hospital_Performance_Report.pdf) | [Download (PDF)](./Reports/Hospital_Performance_Report.pdf?raw=true)
 ---
 
 ## 8. Strategic Recommendations
