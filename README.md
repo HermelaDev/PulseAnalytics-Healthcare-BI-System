@@ -3,7 +3,7 @@
 ## Table of Contents
 1. [Problem Statement](#1-problem-statement)
 2. [Project Directory](#2-project-directory)
-3. [Tools & Technologies](#3-tools--technologies)
+3. [Tools And Technologies](#3-tools--technologies)
 4. [Strategic Business Questions](#4-strategic-business-questions)
 5. [Data Source & Characteristics](#5-data-source--characteristics)
 6. [Technical Workflow](#6-technical-workflow)
